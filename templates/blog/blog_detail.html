@@ -74,6 +74,7 @@
 				<a href="{% url 'add_likes' post.id %}">Нравится</a>
 				<a href="{% url 'del_likes' post.id %}">Не нравится</a>
 			</div>
+                        <br><br>
                         <h3>Оставить комментарий</h3>
                         <div class="container my-5 py-5">
     <div class="row d-flex justify-content-center">
@@ -101,54 +102,19 @@
                             <div>
                                 <input type="submit">
                             </div>
-
                                 </form>
                         </div>
-
                         <div>
                             {% for comment in post.comments_set.all %}
                             <div class="view-comment">
+                                <br><br>
                                 <h4>{{ comment.name }}</h4>
                                 <p>
                                     {{ comment.text_comments }}
                                 </p>
                             </div>
                             {% endfor %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    </div>
-
-
-
-
+                        </div>
                         </p>
                     </div>
                 </div>

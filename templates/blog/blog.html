@@ -58,18 +58,34 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        {% for post in post_list %}
+                        {% for post in post_list.object_list %}
                         <br><br>
                             <h3 ><a href="{{ post.id }}">{{ post.title }}</a></h3>
                                {{ post.date }}
                             {{ post.author }}
                         {% endfor %}
+<br><br><br>
+  <ul class="pagination justify-content-center ">
+      {% for n in post_list.paginator.page_range %}
+          {% if posts_list.number == n %}
+              <li class="page-item active" aria-current="page">
+                 <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+              </li>
+          {% else %}
+              <li class="page-item">
+                 <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+              </li>
+          {% endif %}
+      {% endfor %}
+  </ul>
+</nav>
 
                         </p>
                     </div>
                 </div>
             </div>
         </article>
+
         <!-- Footer-->
         <footer class="border-top">
             <div class="container px-4 px-lg-5">

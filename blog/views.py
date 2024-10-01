@@ -2,17 +2,29 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import View
 from .models import Post, Likes
 from .form import CommentsForm
+from django.core.paginator import Paginator
+
+
+
+
+
 
 class PostView(View):
     '''вывод записей '''
     def get(self, request):
         posts = Post.objects.all()
-        return render(request, 'blog/blog.html', {'post_list': posts})
+        paginator = Paginator(posts, 3)
+
+        page_number = request.GET.get('page', 1)
+        page = paginator.get_page(page_number)
+
+
+
+        return render(request, 'blog/blog.html', {'post_list': page})
 
 
 def about(request):
     return render(request, 'blog/about.html')
-
 
 
 class PostDetail(View):
