@@ -9,5 +9,4 @@ urlpatterns = [path('', views.PostView.as_view()),
                path('<int:pk>/del_likes/', views.DelLike.as_view(), name='del_likes'),
                path('about/', views.about, name='about'),
 
-
-        ]
+               ]

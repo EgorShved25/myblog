@@ -9,8 +9,6 @@ class Post(models.Model):
     date = models.DateField('Дата публикации')
     img = models.ImageField('Картинки', upload_to='image/%Y')
 
-
-
     def __str__(self):
         return f'{self.title}, {self.author}'
 
@@ -18,6 +16,7 @@ class Post(models.Model):
         verbose_name = 'Запись'
         verbose_name_plural = 'Записи'
         ordering = ['-date']
+
 
 class Comments(models.Model):
     '''Комментарии'''
@@ -27,7 +26,7 @@ class Comments(models.Model):
     post = models.ForeignKey(Post, verbose_name='Публикация', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.name}, {self.post}' # что выводится в админке
+        return f'{self.name}, {self.post}'  # что выводится в админке
 
     class Meta:
         verbose_name = 'Комментарий'
@@ -38,4 +37,3 @@ class Likes(models.Model):
     '''лайки'''
     ip = models.CharField('IP-адрес', max_length=100)
     pos = models.ForeignKey(Post, verbose_name='Публикация', on_delete=models.CASCADE)
-

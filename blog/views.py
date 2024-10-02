@@ -5,21 +5,14 @@ from .form import CommentsForm
 from django.core.paginator import Paginator
 
 
-
-
-
-
 class PostView(View):
     '''вывод записей '''
+
     def get(self, request):
         posts = Post.objects.all()
         paginator = Paginator(posts, 3)
-
         page_number = request.GET.get('page', 1)
         page = paginator.get_page(page_number)
-
-
-
         return render(request, 'blog/blog.html', {'post_list': page})
 
 
@@ -29,12 +22,15 @@ def about(request):
 
 class PostDetail(View):
     '''отдельная страница записи'''
+
     def get(self, request, pk):
         post = Post.objects.get(id=pk)
         return render(request, 'blog/blog_detail.html', {'post': post})
 
+
 class AddComments(View):
     '''добавление комментариев'''
+
     def post(self, request, pk):
         form = CommentsForm(request.POST)
         if form.is_valid():
@@ -43,6 +39,7 @@ class AddComments(View):
             form.save()
         return redirect(f'/{pk}')
 
+
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -50,6 +47,7 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
 
 class AddLike(View):
     def get(self, request, pk):
@@ -74,11 +72,3 @@ class DelLike(View):
             return redirect(f'/{pk}')
         except:
             return redirect(f'/{pk}')
-
-
-
-
-
-
-
-
