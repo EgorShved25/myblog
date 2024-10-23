@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import View
-from .models import Post, Likes
-from .form import CommentsForm
+from .models import Post, Likes, Subscriber
+from .form import CommentsForm, SubscriberForm
 from django.core.paginator import Paginator
+from django.core.mail import send_mail
+from django.conf import settings
+
+
+
+
 
 
 class PostView(View):
@@ -72,3 +78,37 @@ class DelLike(View):
             return redirect(f'/{pk}')
         except:
             return redirect(f'/{pk}')
+
+
+def subscribe(request):
+    if request.method == 'POST':
+        form = SubscriberForm(request.POST)
+        if form.is_valid():
+            form.save()  # Сохраняем адрес электронной почты
+            # Отправляем уведомление о подписке
+            send_mail(
+                'Подписка на обновления',
+                'Спасибо за подписку на новые обновления в нашем блоге!',
+                settings.DEFAULT_FROM_EMAIL,
+                [form.cleaned_data['email']],
+                fail_silently=False,
+            )
+            return redirect('subscribe_success')  # Успешный редирект
+    else:
+        form = SubscriberForm()
+
+    return render(request, 'blog/subscribe.html', {'form': form})
+
+
+
+def subscribe_success(request):
+    count = Subscriber.objects.count()
+    return render(request, 'blog/subscribe_success.html', {'subscriber_count': count})
+
+
+
+
+
+
+
+

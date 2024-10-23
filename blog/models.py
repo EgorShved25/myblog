@@ -37,3 +37,13 @@ class Likes(models.Model):
     '''лайки'''
     ip = models.CharField('IP-адрес', max_length=100)
     pos = models.ForeignKey(Post, verbose_name='Публикация', on_delete=models.CASCADE)
+
+
+class Subscriber(models.Model):
+    '''Подписка'''
+    email = models.EmailField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
+
