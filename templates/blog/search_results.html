@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты поиска</title>
+
+    <form action="{% url 'search_posts' %}" method="get">
+    <input type="text" name="q" placeholder="Поиск постов..." required>
+    <button type="submit">Поиск</button>
+</form>
+
+</head>
+<body>
+    <h1>Результаты поиска для "{{ query }}"</h1>
+
+    {% if results %}
+        <ul>
+            {% for post in results %}
+                <li>
+                    <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+                    <p>{{ post.content|truncatewords:30 }}</p>  <!-- Сократите контент для предварительного просмотра -->
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Посты не найдены.</p>
+    {% endif %}
+
+    <a href="/">Вернуться на главную</a>  <!-- Ссылка на главную страницу -->
+</body>
+</html>
+

@@ -5,6 +5,7 @@ from .form import CommentsForm, SubscriberForm
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import Q
 
 
 
@@ -108,7 +109,14 @@ def subscribe_success(request):
 
 
 
+def search_posts(request):
+    query = request.GET.get('q')  # Получаем строку поиска из GET-запроса
+    results = []  # Инициализируем results как пустой список по умолчанию
 
+    if query:
+        # Фильтруем посты по заголовку и описанию
+        results = Post.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
 
-
+    # Возвращаем HttpResponse даже если нет результатов
+    return render(request, 'blog/search_results.html', {'results': results, 'query': query})
 
