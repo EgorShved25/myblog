@@ -8,10 +8,6 @@ from django.conf import settings
 from django.db.models import Q
 
 
-
-
-
-
 class PostView(View):
     '''вывод записей '''
 
@@ -101,22 +97,16 @@ def subscribe(request):
     return render(request, 'blog/subscribe.html', {'form': form})
 
 
-
 def subscribe_success(request):
     count = Subscriber.objects.count()
     return render(request, 'blog/subscribe_success.html', {'subscriber_count': count})
 
 
-
-
 def search_posts(request):
     query = request.GET.get('q')  # Получаем строку поиска из GET-запроса
     results = []  # Инициализируем results как пустой список по умолчанию
-
     if query:
         # Фильтруем посты по заголовку и описанию
         results = Post.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
-
     # Возвращаем HttpResponse даже если нет результатов
     return render(request, 'blog/search_results.html', {'results': results, 'query': query})
-
