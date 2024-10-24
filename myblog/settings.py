@@ -137,6 +137,6 @@ EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 587  # Порт для TLS
 EMAIL_USE_TLS = True  # Используйте TLS
 EMAIL_HOST_USER = 'thewarriors79@mail.ru'  # Ваш полный адрес электронной почты
-EMAIL_HOST_PASSWORD = '1mNhtxvDNxQmgdsweksd'  # Ваш пароль
+EMAIL_HOST_PASSWORD = '!!!!!!!!!!'  # Ваш пароль
 DEFAULT_FROM_EMAIL = 'thewarriors79@mail.ru'  # Отправитель
 
